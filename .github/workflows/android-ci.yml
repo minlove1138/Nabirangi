@@ -21,6 +21,19 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
+      - name: Configure Gradle
+        run: |
+          echo "org.gradle.jvmargs=-Xmx2g -XX:MaxPermSize=512m" >> gradle.properties
+
+      - name: Disable Gradle Daemon
+        run: echo "org.gradle.daemon=false" >> gradle.properties
+
+      - name: Debug System Resources
+        run: |
+          free -h
+          df -h
+          ulimit -a
+
       - name: Build with Gradle
         run: ./gradlew assembleDebug
 
